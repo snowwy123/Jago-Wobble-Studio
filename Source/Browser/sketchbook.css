@@ -1,0 +1,808 @@
+/* MIT. Copyright (c) 2026 Cameron Jago Lis Illustrates.
+   Sketchbook layout and theme overrides. */
+
+:root {
+  --hand: 'Segoe Print', 'Comic Sans MS', cursive;
+  --desk-ink: var(--text);
+  --note-paper: var(--raised);
+  --note-ink: var(--text);
+}
+
+:root[data-theme='sketchbook'] {
+  color-scheme: light;
+  --bg: #f3eddf;
+  --panel: #fcf8ef;
+  --raised: #f1eadb;
+  --line: #c9bfaa;
+  --text: #293d50;
+  --muted: #6d716b;
+  --accent: #294e68;
+  --purple: #ad5141;
+  --hover: #e7ddc9;
+  --hover-line: #6d7d80;
+  --label: #405366;
+  --selected: #e5c77f;
+  --selected-line: #294e68;
+  --selection: #ede0bd;
+  --workspace: #d8d2c2;
+  --grid-dot: #b8b3a3;
+  --button-ink: #fffaf0;
+  --danger: #a64639;
+  --preview: #263e50;
+  --desk-ink: #667066;
+  --note-paper: #edce83;
+  --note-ink: #614831;
+}
+
+body {
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+button,
+input,
+select {
+  border-radius: 4px 6px 4px 5px;
+}
+
+button {
+  transition:
+    background-color 100ms,
+    border-color 100ms;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+
+.top {
+  height: 80px;
+  gap: 22px;
+  padding: 0 22px;
+  background: var(--panel);
+  border-bottom: 2px solid var(--text);
+}
+
+.brand {
+  min-width: 255px;
+  font-family: var(--hand);
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.25;
+  gap: 12px;
+}
+
+.brand small {
+  display: inline-block;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.1px;
+  padding: 3px 5px;
+  border: 1px solid var(--accent);
+  transform: rotate(-4deg);
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.brand-tagline {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+  margin-top: 4px;
+}
+
+.brand > svg {
+  width: 38px;
+  height: 38px;
+  transform: rotate(-5deg);
+  filter: drop-shadow(2px 2px 0 #0002);
+}
+
+:root[data-theme='sketchbook'] .brand svg rect {
+  fill: #294e68;
+}
+
+:root[data-theme='sketchbook'] .brand svg path {
+  stroke: #edce83;
+}
+
+.project-slip {
+  min-width: 0;
+  padding: 5px 0 2px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.slip-label {
+  display: block;
+  padding-left: 7px;
+  font:
+    9px/1.5 'Courier New',
+    monospace;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+}
+
+.project-name {
+  font-size: 14px;
+  width: 185px;
+}
+
+.save-state {
+  font:
+    10px/1.4 'Courier New',
+    monospace;
+  white-space: nowrap;
+}
+
+.top-actions {
+  gap: 7px;
+}
+
+.top-actions button {
+  min-height: 38px;
+  border-color: var(--line);
+}
+
+#exportBtn {
+  margin-left: 5px;
+  box-shadow: 2px 3px 0 var(--text);
+  border: 1px solid var(--text);
+  border-radius: 4px 7px 3px 5px;
+}
+
+:root[data-theme='sketchbook'] #exportBtn {
+  background: #b8513e;
+  color: #fffaf0;
+}
+
+.app {
+  height: calc(100dvh - 80px);
+  grid-template-columns: 70px minmax(200px, 1fr) 316px;
+  grid-template-rows: minmax(170px, 1fr) 174px;
+}
+
+.tools {
+  padding: 12px 8px;
+  gap: 7px;
+  border-right: 1px solid var(--text);
+}
+
+.tools::before {
+  content: 'TOOLS';
+  font:
+    9px/1.6 'Courier New',
+    monospace;
+  letter-spacing: 1px;
+  margin: 0 0 2px;
+}
+
+:root[data-theme='sketchbook'] .tools {
+  background: #294354;
+  color: #f8f2e5;
+  scrollbar-color: #809293 #294354;
+}
+
+.tools button {
+  width: 43px;
+  height: 41px;
+  flex-shrink: 0;
+}
+
+:root[data-theme='sketchbook'] .tools button {
+  color: #f8f2e5;
+}
+
+:root[data-theme='sketchbook'] .tools button:hover {
+  background: #3a5969;
+}
+
+:root[data-theme='sketchbook'] .tools button.active {
+  color: #253e50;
+  background: #edce83;
+  border: 1px solid #e0b95d;
+  border-radius: 5px 8px 4px 7px;
+  box-shadow: 2px 2px 0 #182e3c;
+}
+
+.tools hr {
+  border-color: currentColor;
+  opacity: 0.25;
+  width: 30px;
+}
+
+.canvas-top {
+  height: 42px;
+  padding: 0 20px;
+}
+
+.eyebrow {
+  font-family: var(--hand);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.canvas-top .tag,
+.canvas-bottom {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+}
+
+.render-bar {
+  min-height: 45px;
+  padding: 0 20px 10px;
+}
+
+.render-bar .segmented {
+  border-color: var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+}
+
+.render-bar .segmented button[aria-pressed='true'] {
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+
+.viewport {
+  background-image:
+    linear-gradient(90deg, #ffffff10 1px, transparent 1px),
+    linear-gradient(#ffffff10 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-top: 1px solid var(--line);
+}
+
+:root[data-theme='sketchbook'] .viewport {
+  background-image:
+    linear-gradient(90deg, #a79e8525 1px, transparent 1px),
+    linear-gradient(#a79e8525 1px, transparent 1px);
+}
+
+.canvas-wrap {
+  box-shadow:
+    1px 2px 0 #0002,
+    5px 7px 0 -2px #fff8,
+    6px 8px 0 -2px #0002,
+    0 12px 28px #0002;
+}
+
+/* These notes are outside the canvas, so they never enter an export. */
+.desk-note {
+  position: absolute;
+  left: 20px;
+  top: 14px;
+  z-index: 1;
+  pointer-events: none;
+  color: var(--desk-ink);
+  font: 13px var(--hand);
+  transform: rotate(-5deg);
+}
+
+.desk-note svg {
+  display: inline-block;
+  width: 45px;
+  height: 24px;
+  vertical-align: middle;
+}
+
+.empty-hint strong {
+  font-family: var(--hand);
+  font-size: 24px;
+  letter-spacing: -0.7px;
+  color: #536779;
+}
+
+.empty-hint p {
+  color: #777c79;
+  font-size: 12px;
+  max-width: 295px;
+  margin: 10px auto;
+}
+
+.empty-hint > svg {
+  color: #ad7351;
+  width: 64px;
+  stroke-width: 1.8;
+  margin-bottom: 10px;
+}
+
+.canvas-bottom {
+  height: 31px;
+  background: var(--bg);
+}
+
+.inspector {
+  border-left: 1px solid var(--text);
+}
+
+.inspector-tabs {
+  gap: 5px;
+  padding: 12px 12px 0;
+  border-bottom: 1px solid var(--text);
+  background: var(--bg);
+}
+
+.inspector-tabs button {
+  min-height: 38px;
+  font-family: var(--hand);
+  font-size: 12px;
+  border-radius: 6px 6px 0 0;
+  border-bottom: 0;
+  background: var(--raised);
+  margin-bottom: -1px;
+}
+
+.inspector-tabs button[aria-selected='true'] {
+  border: 1px solid var(--text);
+  border-bottom: 1px solid var(--panel);
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: inset 0 3px 0 var(--purple);
+}
+
+.section {
+  padding: 18px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.section-title small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.brushes {
+  gap: 7px;
+}
+
+.brushes button {
+  background: var(--panel);
+  height: 43px;
+}
+
+#useStamp {
+  background: var(--raised);
+  color: var(--text);
+  border: 1px dashed var(--hover-line);
+  font-size: 12px;
+  font-weight: 400;
+  box-shadow: none;
+}
+
+#useStamp[aria-pressed='true'] {
+  background: var(--selected);
+  border-style: solid;
+}
+
+.control label {
+  font-size: 13px;
+}
+
+.control output {
+  font:
+    11px 'Courier New',
+    monospace;
+}
+
+input[type='range'] {
+  accent-color: var(--accent);
+  height: 20px;
+}
+
+.swatch {
+  border-radius: 44% 52% 45% 49%;
+  height: 23px;
+  width: 23px;
+  box-shadow: inset 0 0 0 1px #0001;
+}
+
+.swatch:nth-child(3n) {
+  border-radius: 53% 41% 49% 43%;
+}
+
+.swatch.selected {
+  outline: 1px solid var(--text);
+  outline-offset: 3px;
+}
+
+.preset-status {
+  background: var(--raised);
+  color: var(--text);
+  border-left: 3px solid var(--purple);
+  border-radius: 0 3px 3px 0;
+}
+
+#brushPreviewCanvas,
+#motionPreviewCanvas,
+#sprayPreview {
+  border-radius: 3px 6px 3px 5px;
+  border: 1px solid var(--line);
+  box-shadow: 2px 3px 0 var(--raised);
+}
+
+.layer {
+  border-radius: 3px;
+  background: var(--panel);
+}
+
+.layer.selected {
+  background: var(--selection);
+  border-color: var(--purple);
+  border-left-width: 3px;
+}
+
+.timeline {
+  background: var(--panel);
+  padding: 11px 19px;
+  border-top: 2px solid var(--text);
+}
+
+.timeline-header {
+  margin-bottom: 10px;
+  gap: 11px;
+}
+
+.flipbook-label {
+  font-size: 15px;
+  transform: rotate(-3deg);
+  padding: 0 6px 2px;
+  border-bottom: 2px solid var(--purple);
+}
+
+.frame-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px 5px 2px 4px;
+  padding: 6px;
+}
+
+.frame-card.active {
+  background: var(--selected);
+  color: var(--text);
+  border-color: var(--accent);
+  box-shadow: 2px 2px 0 var(--line);
+}
+
+.frame-card canvas {
+  border-radius: 1px;
+}
+
+.frame-label {
+  font-family: 'Courier New', monospace;
+  margin-top: 2px;
+}
+
+.add-frame {
+  background: transparent;
+  border: 1px dashed var(--muted);
+  border-radius: 3px;
+}
+
+.toast {
+  border: 1px solid var(--note-ink);
+  border-radius: 3px 5px 3px 4px;
+  box-shadow: 3px 4px 0 #0002;
+  background: var(--note-paper);
+  color: var(--note-ink);
+}
+
+dialog {
+  border-radius: 5px 9px 4px 7px;
+  border: 1px solid var(--text);
+  box-shadow:
+    7px 8px 0 #0003,
+    0 24px 70px #0003;
+}
+
+dialog h2 {
+  font-family: var(--hand);
+  font-size: 24px;
+  letter-spacing: -0.6px;
+}
+
+.preview-info {
+  padding: 12px;
+  border: 1px dashed var(--purple);
+  font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+  .top {
+    gap: 12px;
+    padding: 0 13px;
+  }
+  .brand {
+    min-width: 224px;
+    font-size: 21px;
+  }
+  .brand-tagline {
+    font-size: 9px;
+  }
+  .project-name {
+    width: 150px;
+  }
+  .save-state {
+    display: none;
+  }
+  .app {
+    grid-template-columns: 60px minmax(200px, 1fr) 278px;
+  }
+  .section {
+    padding: 15px;
+  }
+  .tools {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .palette {
+    gap: 5px;
+  }
+  .swatch {
+    width: 21px;
+    height: 21px;
+  }
+}
+
+@media (max-width: 760px) {
+  .top {
+    height: 72px;
+    gap: 8px;
+  }
+  .brand {
+    min-width: 174px;
+    font-size: 19px;
+    gap: 7px;
+  }
+  .brand small {
+    display: none;
+  }
+  .brand > svg {
+    width: 30px;
+    height: 30px;
+  }
+  .brand-tagline {
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+  .project-slip {
+    display: none;
+  }
+  .app {
+    height: calc(100dvh - 72px);
+    grid-template-columns: 54px minmax(200px, 1fr);
+    grid-template-rows: minmax(170px, 1fr) 157px;
+  }
+  .inspector {
+    top: 72px;
+    width: min(310px, calc(100vw - 54px));
+  }
+  .tools {
+    padding: 8px 4px;
+    gap: 5px;
+  }
+  .tools button {
+    width: 39px;
+    height: 38px;
+  }
+  .desk-note {
+    display: none;
+  }
+  .top-actions {
+    gap: 5px;
+  }
+  .top-actions button {
+    padding: 6px;
+  }
+  #exportBtn {
+    margin-left: 0;
+  }
+  .canvas-top {
+    padding: 0 10px;
+  }
+  .render-bar {
+    padding: 0 10px 8px;
+  }
+  .timeline {
+    padding: 10px;
+  }
+  .timeline-header {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 460px) {
+  .top {
+    height: 100px;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 60px 32px;
+  }
+  .brand {
+    min-width: 0;
+    font-size: 17px;
+  }
+  .brand-tagline {
+    display: none;
+  }
+  .brand > svg {
+    width: 27px;
+    height: 27px;
+  }
+  .project-slip {
+    display: block;
+    grid-column: 1 / 3;
+    grid-row: 2;
+    padding: 0;
+    border: 0;
+  }
+  .slip-label {
+    display: none;
+  }
+  .project-name {
+    width: 100%;
+  }
+  .app {
+    height: calc(100dvh - 100px);
+  }
+  .inspector {
+    top: 100px;
+  }
+  .top-actions button {
+    min-height: 32px;
+    padding: 5px;
+  }
+  .top-actions .primary span {
+    display: none;
+  }
+  .top-actions {
+    gap: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+}
+
+/* A small palette that can stay open while drawing. */
+#colourDialog {
+  position: fixed;
+  inset: auto auto var(--picker-bottom, 190px) var(--picker-left, 72px);
+  margin: 0;
+  z-index: 40;
+  width: min(248px, calc(100vw - 84px));
+  max-height: var(--picker-height, calc(100dvh - 100px));
+  padding: 12px;
+  overflow: auto;
+  box-shadow: 0 5px 22px #0003;
+}
+#colourDialog.expanded {
+  width: min(380px, calc(100vw - 24px));
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  max-height: calc(100dvh - 24px);
+}
+.colour-heading {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#colourDialog h2 {
+  font-size: 16px;
+  margin: 0;
+  flex: 1;
+}
+.colour-heading button {
+  padding: 2px;
+  min-width: 28px;
+  height: 28px;
+  font-size: 20px;
+}
+#colourWheel {
+  display: block;
+  width: 164px;
+  height: 164px;
+  max-width: 100%;
+  margin: 6px auto;
+  touch-action: none;
+  cursor: crosshair;
+}
+#colourDialog.expanded #colourWheel {
+  width: 256px;
+  height: 256px;
+}
+.colour-hex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.colour-hex i {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px solid var(--text);
+  border-radius: 4px;
+}
+.colour-hex label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.colour-hex input {
+  min-width: 0;
+  width: 100%;
+}
+.colour-rgb {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0;
+}
+.colour-rgb label {
+  font-size: 11px;
+}
+.colour-rgb input {
+  width: 100%;
+  min-width: 0;
+  padding: 5px;
+}
+#colourSliders summary {
+  font-size: 11px;
+  cursor: pointer;
+}
+.colour-range {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px;
+  margin: 6px 0;
+  font-size: 12px;
+}
+.colour-range input {
+  grid-column: 1 / 3;
+  width: 100%;
+}
+#colourDialog .hint {
+  margin: 7px 0 0;
+  font-size: 11px;
+}
+#colourPickerError:empty {
+  display: none;
+}
+.live-motion-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.live-motion-switch input {
+  margin: 0;
+}
+@media (max-width: 600px) {
+  #colourDialog {
+    left: 62px;
+    bottom: var(--picker-bottom, 170px);
+    max-height: calc(100dvh - 115px);
+  }
+  #colourDialog.expanded {
+    left: 50%;
+    bottom: auto;
+    max-height: calc(100dvh - 24px);
+  }
+}
+
+@media (max-width: 360px) {
+  .brand > span {
+    display: none;
+  }
+}
