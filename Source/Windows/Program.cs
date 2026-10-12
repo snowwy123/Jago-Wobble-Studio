@@ -25,8 +25,8 @@ using Microsoft.Web.WebView2.WinForms;
 [assembly: AssemblyProduct("Jago Wobble Studio")]
 [assembly: AssemblyCompany("Cameron Jago Lis Illustrates")]
 [assembly: AssemblyCopyright("Copyright (c) 2026 Cameron Jago Lis Illustrates.")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.8.0.0")]
+[assembly: AssemblyFileVersion("1.8.0.0")]
 internal static class Program
 {
     internal static string AppRoot, RuntimeRoot, TestRoot;
@@ -42,10 +42,11 @@ internal static class Program
     [STAThread]
     private static int Main(string[] args)
     {
-        IsTest = args.Length == 2 && args[0] == "--self-test";
+        if(JagoSuiteBootstrap.ForwardExisting("wobble",args))return 0;
+        IsTest = JagoSuiteBootstrap.TestRoot(args)!=null || (args.Length == 2 && args[0] == "--self-test");
         if (IsTest)
-            TestRoot = Path.GetFullPath(args[1]);
-        AppRoot = IsTest ? TestRoot : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Jago Loop Studio");
+            TestRoot = JagoSuiteBootstrap.TestRoot(args) ?? Path.GetFullPath(args[1]);
+        AppRoot = IsTest ? TestRoot : JagoSuiteBootstrap.WorkspaceProfile ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Jago Loop Studio");
         try
         {
             if (!IsTest)

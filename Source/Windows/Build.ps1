@@ -23,7 +23,7 @@ $compileArguments = @(
  '/nologo', '/target:winexe', '/platform:x64', '/optimize+', '/utf8output',
  ('/out:' + $studioOutput), ('/win32manifest:' + (Join-Path $PSScriptRoot 'app.manifest')),
  ('/win32icon:' + (Join-Path $PSScriptRoot 'studio.ico')),
- '/reference:System.dll', '/reference:System.Core.dll', '/reference:System.Drawing.dll', '/reference:System.Windows.Forms.dll', '/reference:System.Web.Extensions.dll',
+ '/reference:System.Security.dll','/reference:System.dll', '/reference:System.Core.dll', '/reference:System.Drawing.dll', '/reference:System.Windows.Forms.dll', '/reference:System.Web.Extensions.dll',
  ('/reference:' + (Join-Path $sdk 'lib\net462\Microsoft.Web.WebView2.Core.dll')),
  ('/reference:' + (Join-Path $sdk 'lib\net462\Microsoft.Web.WebView2.WinForms.dll')),
  ('/resource:' + (Join-Path $sdk 'lib\net462\Microsoft.Web.WebView2.Core.dll') + ',Studio.Microsoft.Web.WebView2.Core.dll'),
@@ -44,3 +44,9 @@ if (-not (Test-Path -LiteralPath $html)) { throw 'Build the browser app first: n
 & $compiler @compileArguments
 if ($LASTEXITCODE -ne 0) { throw 'Windows build failed.' }
 Write-Output 'Windows edition rebuilt successfully.'
+
+# Short public filename; the development alias keeps older local scripts working.
+try { Copy-Item -LiteralPath (Join-Path $suiteRoot 'Jago-Wobble-Studio.exe') -Destination (Join-Path $suiteRoot 'Jago-Wobble.exe') -Force } catch [System.IO.IOException] { Write-Warning ('The short-name executable is open. The rebuilt development executable is ready; close the app before replacing its running copy. ' + $_.Exception.Message) }
+
+
+Copy-Item -LiteralPath (Join-Path $suiteRoot 'Jago-Wobble-Studio.html') -Destination (Join-Path $suiteRoot 'Jago-Wobble.html') -Force

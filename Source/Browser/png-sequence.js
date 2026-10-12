@@ -71,7 +71,7 @@ function pngSequenceSchedule(seconds, fps = 24) {
   if (![12, 24, 30, 60].includes(fps)) throw Error('Choose a supported sequence frame rate.');
   const sequence = frameSequence(),
     duration =
-      project.frames.length === 1
+      project.frames.length === 1 && !project.activeClip
         ? seconds
         : sequence.reduce((n, i) => n + project.frames[i].hold / project.fps, 0),
     count = Math.max(1, Math.ceil(duration * fps - 1e-7));
@@ -126,6 +126,8 @@ async function exportPNGSequence(options, onProgress = () => {}, cancelled = () 
   }
   const timing = {
     format: 'jago-png-sequence',
+    sourceStudio:'wobble',
+    sourceProjectId:project.suiteProjectId || crypto.randomUUID(),
     version: 1,
     name: project.name,
     width: w,

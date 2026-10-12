@@ -388,7 +388,7 @@ renderLayer = function (
   motionPreviewActive = motionPreview && effect?.owner === project.activeLayer;
   layerTextureMotion = effect?.motion.type === 'crawl' ? effect.motion : null;
   try {
-    const out = cachedLayerArtwork(fi, id, tick, includeDraft, style, cell);
+    const out = cachedLayerArtwork(fi, id, tick, includeDraft && !!draft && id === project.activeLayer, style, cell);
     return effect && !renderingStill
       ? warpLayer(out, effect.motion, tick, effect.bounds, style, cell)
       : out;
@@ -444,13 +444,21 @@ renderFrame = function (
   }
   cc.globalCompositeOperation = 'source-over';
   if (!includeDraft && !motionPreview) {
-    if (renderCache.size >= 8) renderCache.delete(renderCache.keys().next().value);
+    if (renderCache.size >= Math.max(1,Math.min(8,Math.floor(24*1024*1024/(c.width*c.height*4))))) renderCache.delete(renderCache.keys().next().value);
     renderCache.set(key, c);
   }
   return c;
 };
+let wobbleHighlightedFrame = -1, animatedMarkRevision = -1, animatedMarkResult = false;
+function wobbleHasAnimatedMarks() {
+  if (animatedMarkRevision !== revision) {
+    animatedMarkRevision = revision;
+    animatedMarkResult = project.frames.some(f=>Object.values(f.contents).some(ops=>allOperations(ops).some(op=>op.animate)));
+  }
+  return animatedMarkResult;
+}
 tick = function (now) {
-  if (!exporting && !document.hidden) {
+  if (!exporting && !document.hidden && window.JagoSession?.status().focused !== false) {
     const seconds = playing ? playBase / project.fps + (now - playStart) / 1000 : now / 1000;
     const hasNew = projectHasMotion(),
       motionRate = hasNew ? 24 : project.boil;
@@ -463,7 +471,7 @@ tick = function (now) {
     if (nextTick !== lastTick) {
       phase = nextTick;
       lastTick = nextTick;
-      renderNeeded = true;
+      if (!drawing && (hasNew || (project.wiggle > 0 && wobbleHasAnimatedMarks()))) renderNeeded = true;
     }
     if (playing) {
       const index = frameAtBeat(playBase + ((now - playStart) / 1000) * project.fps);
@@ -472,9 +480,11 @@ tick = function (now) {
         renderNeeded = true;
         updateStatus();
       }
-      Array.from($('frames').children).forEach((e, i) =>
-        e.classList.toggle('playing', i === playIndex)
-      );
+      if (wobbleHighlightedFrame !== playIndex) {
+        $('frames').children[wobbleHighlightedFrame]?.classList.remove('playing');
+        $('frames').children[playIndex]?.classList.add('playing');
+        wobbleHighlightedFrame = playIndex;
+      }
     }
     if (renderNeeded) paintCanvas();
     if (typeof paintMotionPreview === 'function') paintMotionPreview(now);

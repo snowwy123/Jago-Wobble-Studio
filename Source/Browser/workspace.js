@@ -128,7 +128,13 @@ function renderLayers() {
   });
 }
 
+const frameThumbnailCache = new Map();
+let frameThumbnailRevision = -1;
 function renderFrames() {
+  if (frameThumbnailRevision !== revision) {
+    frameThumbnailCache.clear();
+    frameThumbnailRevision = revision;
+  }
   const list = $('frames'),
     scroll = list.scrollLeft;
   list.replaceChildren();
@@ -138,7 +144,9 @@ function renderFrames() {
     b.title = `Frame ${i + 1} · ${f.hold} beat${f.hold === 1 ? '' : 's'}`;
     b.setAttribute('aria-label', b.title);
     b.setAttribute('aria-pressed', String(i === project.current));
-    const thumb = makeCanvas(174, 108);
+    let thumb = frameThumbnailCache.get(f.id);
+    if (!thumb) {
+    thumb = makeCanvas(174, 108);
     const tc = thumb.getContext('2d');
     tc.fillStyle = project.transparent ? '#eeedf0' : project.paper;
     tc.fillRect(0, 0, 174, 108);
@@ -149,6 +157,8 @@ function renderFrames() {
     tc.imageSmoothingEnabled = project.renderStyle !== 'pixel';
     tc.drawImage(renderFrame(i, 0, true), 0, 0);
     tc.restore();
+    frameThumbnailCache.set(f.id, thumb);
+    }
     const label = document.createElement('span');
     label.className = 'frame-label';
     label.innerHTML = `<span>${String(i + 1).padStart(2, '0')}</span><span>×${f.hold}</span>`;

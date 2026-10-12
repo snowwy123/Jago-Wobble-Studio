@@ -60,7 +60,7 @@ function validateProject(v) {
     !num(v.wiggle, 0, 12) ||
     !int(v.boil, 1, 24) ||
     !int(v.fps, 1, 24) ||
-    !['loop', 'pingpong'].includes(v.loop) ||
+    !['loop', 'pingpong', 'reverse'].includes(v.loop) ||
     typeof v.transparent !== 'boolean' ||
     typeof v.wiggleEnabled !== 'boolean' ||
     !Array.isArray(v.layers) ||

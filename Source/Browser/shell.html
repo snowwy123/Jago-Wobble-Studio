@@ -876,7 +876,7 @@ See the Credits and Notices included with this suite.
             /><label for="fps">fps</label
             ><select id="loopMode" aria-label="Playback mode">
               <option value="loop">Loop</option>
-              <option value="pingpong">Ping-pong</option>
+              <option value="pingpong">Ping-pong</option><option value="reverse">Reverse</option>
             </select>
           </div>
           <div class="spacer"></div>
@@ -1070,8 +1070,9 @@ See the Credits and Notices included with this suite.
       ><label class="check"
         ><input id="onionOriginal" type="checkbox" />Use original artwork colours</label
       >
+      <label class="check"><input id="onionWrap" type="checkbox">Wrap at animation section ends</label><label class="check"><input id="onionActiveOnly" type="checkbox">Show only the active layer</label>
       <p class="hint">
-        Closer frames are stronger when fading is on. Frames stop at the timeline ends. These guides
+        Closer frames are stronger when fading is on. Wrap optionally joins the end to the beginning. Active layer helps keep backgrounds out of your guides. These guides
         are hidden during playback and never exported.
       </p>
       <div class="dialog-actions">
@@ -1394,24 +1395,7 @@ See the Credits and Notices included with this suite.
         ><strong>A little line. A lot of life.</strong> Draw, add a wobble, and make a little loop.
         Save your .jago drawings and brush packs to keep them editable.</p
       >
-      <section class="about-support">
-        <h3>Take it to the print table</h3>
-        <p
-          ><b>Wobble → Dither:</b> export a PNG sequence ZIP, then in Jago Dither Studio choose
-          Layers → + Wobble loop. Your moving drawing becomes an image layer, ready for printing
-          textures, colour and lettering.</p
-        >
-        <p
-          ><b>Dither → Wobble:</b> export a Wobble project from Dither and open the .jago file here.
-          Choose one printed layer or separate ink layers. Add a drawing layer above it to keep
-          sketching. Keep your original .jagodither file to edit the text and print settings.</p
-        >
-        <p class="hint"
-          >Dither accepts loops up to 12 seconds. The return trip supports up to 48 frames; choose a
-          lower transfer rate for longer loops. Click the paper dimensions above the drawing to
-          resize it without stretching your marks.</p
-        >
-      </section>
+
       <section class="about-support">
         <h3>About &amp; support</h3>
         <p>Created by Cameron Jago Lis Illustrates.</p>
@@ -1443,7 +1427,7 @@ See the Credits and Notices included with this suite.
       <div class="about-credits">
         <strong>Open source. Free forever.</strong>
         <p>All the drawing tools are free, and the source is available under the MIT License.</p>
-        <p>Version 1.2.0 · Windows &amp; browser. Save your drawings as .jago projects.</p>
+        <p>Version 1.3.1 · Windows &amp; browser. Save your drawings as .jago projects.</p>
         <p class="hint"
           >Microsoft WebView2 licences and notices are included with the Windows app. See
           Documentation/Credits.md for credits.</p

@@ -24,6 +24,7 @@ function beatForFrame(i) {
 
 function pause() {
   playing = false;
+  wobbleHighlightedFrame = -1;
   $('playBtn').innerHTML = icon('play');
   $('playBtn').title = 'Play (Space)';
   playIndex = project.current;

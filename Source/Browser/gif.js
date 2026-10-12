@@ -221,7 +221,7 @@ class GIFWriter {
 function gifSchedule(seconds) {
   const sequence = frameSequence(),
     beats = sequence.reduce((s, i) => s + project.frames[i].hold, 0),
-    duration = project.frames.length === 1 ? seconds : beats / project.fps;
+    duration = project.frames.length === 1 && !project.activeClip ? seconds : beats / project.fps;
   const boundaries = new Set([0, duration]);
   const rate = projectHasMotion() ? 24 : project.boil;
   if (project.wiggleEnabled && (project.wiggle > 0 || projectHasMotion()))

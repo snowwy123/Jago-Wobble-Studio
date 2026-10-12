@@ -21,6 +21,7 @@ async function init() {
   setColour(colour);
   updateUI();
   fit();
+  window.jagoAppReady=true;
   requestAnimationFrame(tick);
 }
 init().catch((err) => {

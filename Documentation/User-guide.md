@@ -87,9 +87,4 @@ Themes and the other shortcuts are in **Help (?)**. Pick whichever colours make 
 
 Click the paper dimensions above the canvas to change its size. Keep artwork centred or anchored at the top left. This affects all frames, preserves layer motion and never stretches the marks. Artwork outside the page is cropped from the view and export, but remains in the project. Undo restores the earlier size.
 
-**Wobble → Dither:** export a **PNG sequence ZIP**, then in Jago Dither Studio choose **Layers → + Wobble loop**. Add dither textures, printing inks and lettering to your animated drawing.
-
-**Dither → Wobble:** export a **Wobble project** from Dither and open the **.jago** file here. Choose a single printed layer or separate ink layers, then add a drawing layer above it. Keep your original **.jagodither** project to edit its text, images and print settings.
-
-Dither accepts loops up to 12 seconds. The return trip supports up to 48 frames; choose a lower transfer rate for longer loops. These transfers use rendered frames, so keep the original project from each studio for full editing.
-
+Use **Send to studio** for a still or layered loop in Dither or Repeat. Windows opens the destination directly; browser handoff uses .jagotransfer. The app’s ? menu explains supported transfers. PNG sequence ZIPs and Dither’s Wobble-project export remain available too.

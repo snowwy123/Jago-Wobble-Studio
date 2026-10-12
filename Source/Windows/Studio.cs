@@ -146,9 +146,10 @@ internal sealed partial class StudioWindow : Form
                 ready = true;
                 loading.Visible = false;
                 browser.Focus();
-                if (Program.IsTest)
+                if (Program.IsTest && JagoSuiteBootstrap.TestRoot(Environment.GetCommandLineArgs())==null)
                     await RunSelfTest();
             };
+            new JagoSuiteHost("wobble",this,core);
             core.Navigate(Origin + "/index.html");
         }
         catch (WebView2RuntimeNotFoundException)
@@ -304,7 +305,7 @@ internal sealed partial class StudioWindow : Form
         closing = true;
         try
         {
-            string result = await browser.CoreWebView2.ExecuteScriptAsync("(() => { if(dirty) saveLocal(); return exporting ? 'export' : autosaveFailed ? 'save' : 'ok'; })()");
+            string result = await browser.CoreWebView2.ExecuteScriptAsync("(() => { if(window.__workspaceConfirmedClose) return 'ok'; if(dirty) saveLocal(); return exporting ? 'export' : autosaveFailed ? 'save' : 'ok'; })()");
             string status = json.Deserialize<string>(result);
             if (status != "ok" && MessageBox.Show(this, status == "export" ? "An export is still running. Close the studio anyway?" : "Your drawing could not be autosaved. Cancel and use Save to keep a project file, or close anyway.", Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
                 return;

@@ -1122,7 +1122,7 @@ function duplicateActiveLayer() {
   }
 }
 
-const onionDefaults = { before: 1, after: 1, opacity: 0.2, fade: true, original: false };
+const onionDefaults = { before: 1, after: 1, opacity: 0.2, fade: true, original: false, wrap: false, activeOnly: false };
 let onionSettings = { ...onionDefaults };
 
 function paintOnionFrames(fi) {
@@ -1149,6 +1149,8 @@ function syncOnionUI() {
   $('onionEnabled').checked = onion;
   $('onionFade').checked = onionSettings.fade;
   $('onionOriginal').checked = onionSettings.original;
+  $('onionWrap').checked = onionSettings.wrap;
+  $('onionActiveOnly').checked = onionSettings.activeOnly;
   $('onionBtn').setAttribute('aria-pressed', String(onion));
   renderNeeded = true;
 }
@@ -1170,7 +1172,7 @@ function initialiseOnion() {
     ])
       if (finite(s[key], a, b) && (key === 'opacity' || Number.isInteger(s[key])))
         onionSettings[key] = s[key];
-    for (const key of ['fade', 'original'])
+    for (const key of ['fade', 'original', 'wrap', 'activeOnly'])
       if (typeof s[key] === 'boolean') onionSettings[key] = s[key];
   } catch (e) {}
   $('onionSettingsBtn').onclick = () => {
@@ -1193,7 +1195,9 @@ function initialiseOnion() {
     };
   for (const [id, key] of [
     ['onionFade', 'fade'],
-    ['onionOriginal', 'original']
+    ['onionOriginal', 'original'],
+    ['onionWrap', 'wrap'],
+    ['onionActiveOnly', 'activeOnly']
   ])
     $(id).onchange = (e) => {
       onionSettings[key] = e.target.checked;

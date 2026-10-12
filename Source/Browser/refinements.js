@@ -583,6 +583,29 @@ function cachedLayerArtwork(fi, id, tick, includeDraft, style, cell = project.pi
     (!layerTextureMotion &&
       (!motionIsEnabled() ||
         !allOperations(project.frames[fi].contents[id]).some((op) => op.animate)));
+  // Smooth live drawing reuses committed ink, then composites only the draft.
+  // Erasers still cut the base correctly; pixel strokes retain their own renderer.
+  if (includeDraft && renderingStill && layerCacheEnabled) {
+    const base = cachedLayerArtwork(fi, id, tick, false, style, cell);
+    const lc = layerCanvas.getContext('2d');
+    if (style === 'pixel') {
+      const w = Math.ceil(project.width / cell), h = Math.ceil(project.height / cell);
+      if (pixelLayerCanvas.width !== w || pixelLayerCanvas.height !== h) {
+        pixelLayerCanvas = makeCanvas(w,h); pixelStrokeCanvas = makeCanvas(w,h);
+      }
+      const pc = pixelLayerCanvas.getContext('2d');
+      pc.clearRect(0,0,w,h);pc.imageSmoothingEnabled=false;
+      pc.drawImage(base,0,0,w*cell,h*cell,0,0,w,h);
+      if(draft && id===project.activeLayer)drawPixelOp(pc,draft,0,cell);
+      lc.clearRect(0,0,project.width,project.height);lc.imageSmoothingEnabled=false;
+      lc.drawImage(pixelLayerCanvas,0,0,w*cell,h*cell);
+    } else {
+      lc.clearRect(0, 0, project.width, project.height);
+      lc.drawImage(base, 0, 0);
+      if (draft && id === project.activeLayer) drawOp(lc, draft, 0);
+    }
+    return layerCanvas;
+  }
   if (!layerCacheEnabled || includeDraft || !independentOfTick)
     return legacyRenderLayer(fi, id, tick, includeDraft, style, cell);
   if (stillCacheRevision !== revision) {

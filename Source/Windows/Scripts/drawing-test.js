@@ -309,8 +309,8 @@
         assert($(id), 'new control ' + id);
       assert(
         Array.from($('appTheme').options)
-          .map((o) => o.textContent)
-          .join('|') === 'Sketchbook|Charcoal|Warm Paper|Midnight Plum|Candy Cloud',
+          .map((o) => o.value)
+          .join('|') === 'sketchbook|charcoal|paper|plum|candy|forest|blueprint',
         'consistent theme names'
       );
       for (const tip of patternTips) {

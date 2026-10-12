@@ -325,6 +325,13 @@ function drawPixelOp(c, op, tick, cell) {
       sc.globalAlpha = 1;
       return;
     }
+    if(project.pixelPerfect && baseWidth<=1 && !isShapeTool(op.tool) && ['pen','pencil','eraser'].includes(op.tool)){
+      const cells=[];const add=(x,y)=>{if(!cells.length||cells.at(-1).x!==x||cells.at(-1).y!==y)cells.push({x,y})};
+      for(let i=0;i<pts.length;i++){const b=pts[i],a=pts[Math.max(0,i-1)];let x=Math.floor(a.x/cell),y=Math.floor(a.y/cell);const bx=Math.floor(b.x/cell),by=Math.floor(b.y/cell),dx=Math.abs(bx-x),dy=-Math.abs(by-y),sx=x<bx?1:-1,sy=y<by?1:-1;let err=dx+dy;while(true){add(x,y);if(x===bx&&y===by)break;const e=err*2;if(e>=dy){err+=dy;x+=sx}if(e<=dx){err+=dx;y+=sy}}}
+      // Remove a redundant orthogonal corner when the next cell forms a diagonal.
+      const clean=[];for(const p of cells){if(clean.length>=2){const a=clean[clean.length-2],b=clean.at(-1);if(Math.abs(a.x-p.x)===1&&Math.abs(a.y-p.y)===1&&((a.x===b.x&&b.y===p.y)||(a.y===b.y&&b.x===p.x)))clean.pop()}clean.push(p)}
+      for(const p of clean)sc.fillRect(p.x,p.y,1,1);return;
+    }
     const stamp = (x, y, p) =>
       pixelDisk(sc, x, y, baseWidth * (op.pressure && !isShapeTool(op.tool) ? 0.25 + 1.5 * p : 1));
     if (pts.length === 1) stamp(Math.floor(pts[0].x / cell), Math.floor(pts[0].y / cell), pts[0].p);

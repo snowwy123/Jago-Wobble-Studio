@@ -23,5 +23,9 @@
   "export.js",
   "colour-picker.js",
   "paper-size.js",
-  "startup.js"
+  "startup.js",
+  "suite-bridge.js",
+  "suite-adapter.js",
+  "suite-round.js",
+  "animation-workshop.js"
 ]
