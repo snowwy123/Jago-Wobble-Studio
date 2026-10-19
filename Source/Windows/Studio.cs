@@ -106,7 +106,7 @@ internal sealed partial class StudioWindow : Form
             };
             core.WebMessageReceived += (s, e) =>
             {
-                if (!e.Source.StartsWith(Origin + "/", StringComparison.OrdinalIgnoreCase))
+                if (!JagoHostSecurity.Trusted(e.Source, Origin + "/index.html"))
                     return;
                 try
                 {

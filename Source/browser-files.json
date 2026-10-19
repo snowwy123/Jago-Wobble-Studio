@@ -27,5 +27,6 @@
   "suite-bridge.js",
   "suite-adapter.js",
   "suite-round.js",
-  "animation-workshop.js"
+  "animation-workshop.js",
+  "refresher.js"
 ]

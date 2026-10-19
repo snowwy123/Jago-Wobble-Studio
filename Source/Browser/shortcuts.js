@@ -51,7 +51,7 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     selectFrame(project.current + 1);
   } else if (k === '[' || k === ']') {
-    brushSize = clamp(brushSize + (k === '[' ? -2 : 2), 1, 80);
+    brushSize = clamp(brushSize + (k === '[' ? -2 : 2), 1, Number($('size').max) || 160);
     $('size').value = brushSize;
     $('sizeValue').textContent = brushSize + ' px';
     updateStatus();

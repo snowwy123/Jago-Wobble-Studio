@@ -24,7 +24,8 @@ test('every browser script is in the load list exactly once', () => {
     .filter((name) => name.endsWith('.js'));
   assert.equal(new Set(files).size, files.length);
   assert.deepEqual([...files, 'toolbar.js'].sort(), onDisk.sort());
-  assert.equal(files.at(-1), 'animation-workshop.js');
+  assert.equal(files.at(-1), 'refresher.js');
+  assert.ok(files.indexOf('animation-workshop.js') < files.indexOf('refresher.js'));
   assert.ok(files.indexOf('suite-adapter.js') < files.indexOf('animation-workshop.js'));
   assert.ok(files.indexOf('startup.js') < files.indexOf('suite-bridge.js'));
 });

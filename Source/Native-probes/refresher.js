@@ -1,0 +1,22 @@
+(async()=>{try{
+ for(let i=0;i<100&&!window.jagoAppReady;i++)await new Promise(r=>setTimeout(r,100));
+ if(!window.JagoWobbleRefresh)throw Error('Refresher missing from Windows app');
+ project=fresh(400,300);makeDemo();resizeBuffers();invalidate();resetHistory();updateUI();
+ const before=snapshot();wobbleExploreMotion();
+ if(document.querySelectorAll('.direction-grid section').length!==4)throw Error('Four directions missing');
+ if(snapshot()!==before)throw Error('Preview changed drawing');
+ document.querySelector('.direction-grid section button').click();
+ if(!activeLayer().motion||motionScope!=='layer')throw Error('Layer apply failed');
+ document.querySelector('.wobble-directions .close').click();undo();
+ if(snapshot()!==before)throw Error('Motion Undo changed source');
+ project=fresh(400,300);resizeBuffers();invalidate();resetHistory();updateUI();
+ for(let i=0;i<3;i++)addFrame(true);
+ wobbleSelectionOwner=project;wobbleFrameSelection=new Set(project.frames.slice(0,3).map(f=>f.id));
+ wobbleBatchFrames('hold',4);
+ if(project.frames.slice(0,3).some(f=>f.hold!==4))throw Error('Native batch timing failed');
+ wobbleBatchFrames('duplicate');if(project.frames.length!==7)throw Error('Batch duplicate failed');
+ undo();if(project.frames.length!==4)throw Error('Batch Undo failed');
+ const pack=await JagoSuite.adapter.export({scope:'whole',count:6,seconds:1,fps:6,maxEdge:400,alpha:true,original:true,separate:false,progress:()=>{}});JagoSuite.validate(pack);
+ if(pack.layers[0].frames.length!==6||!pack.original)throw Error('Native transfer failed');
+ window.suiteTestResult={ok:true,checks:['embedded refresher startup','four non-destructive motion previews','layer apply and Undo','batch timing and duplicate Undo','six-frame transfer with editable original']};
+}catch(e){window.suiteTestResult={ok:false,error:e.stack};}})();

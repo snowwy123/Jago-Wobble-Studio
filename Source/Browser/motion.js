@@ -505,6 +505,9 @@ function projectHasMotion() {
 function applyMotionToLayer() {
   if (!canDraw()) return;
   activeLayer().motion = copy(motionDraft);
+  // An explicit layer effect must not be masked by inherited clipping motion.
+  if (activeLayer().clipTo) activeLayer().followMotion = false;
+  motionScope = 'layer';
   enableAppliedMotion();
   motionPreview = false;
   commit('Layer motion applied');
