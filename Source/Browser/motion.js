@@ -88,7 +88,7 @@ function boundsForOps(ops) {
     y1 = -Infinity;
   for (const op of ops) {
     if (op.kind === 'group') {
-      const b = op.outside
+      const b = op.outside || op.transformOnly
         ? boundsForOps(op.ops)
         : {
             x: Math.min(...op.clip.map((p) => p.x)),

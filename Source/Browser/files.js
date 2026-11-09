@@ -35,7 +35,7 @@ function download(blob, name) {
   setTimeout(() => URL.revokeObjectURL(url), 30000);
 }
 $('saveBtn').onclick = () => {
-  download(new Blob([snapshot()], { type: 'application/json' }), filename('.jago'));
+  download(new Blob([JSON.stringify(JagoProjectPreview.attach(JSON.parse(snapshot()),exportCanvas(project.current,0,project.width,project.height,project.transparent,project.renderStyle,project.pixelSize)))], { type: 'application/json' }), filename('.jago'));
   dirty = false;
   toast('Editable project downloaded');
 };

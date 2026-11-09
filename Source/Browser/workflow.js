@@ -135,6 +135,7 @@ validateProject = function (v) {
     return ops.flatMap((op) => {
       if (!op || ++nodes > 10000) throw Error('Project has too many drawing operations');
       if (op.kind !== 'group') return [op];
+      if(op.transformOnly!==undefined&&typeof op.transformOnly!=='boolean')throw Error('Invalid artwork transform');
       if (
         !Array.isArray(op.transform) ||
         op.transform.length !== 6 ||

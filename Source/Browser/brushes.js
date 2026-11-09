@@ -472,6 +472,7 @@ function drawLiveGroup(c, op, tick, cell = 1) {
     sc = source.getContext('2d');
   for (const child of op.ops)
     cell === 1 ? drawOp(sc, child, tick) : drawPixelOp(sc, child, tick, cell);
+  if(!op.transformOnly){
   const mask = makeCanvas(c.canvas.width, c.canvas.height),
     mc = mask.getContext('2d');
   mc.fillStyle = '#000';
@@ -481,6 +482,7 @@ function drawLiveGroup(c, op, tick, cell = 1) {
   } else pixelPolygon(mc, op.clip, cell);
   sc.globalCompositeOperation = op.outside ? 'destination-out' : 'destination-in';
   sc.drawImage(mask, 0, 0);
+  }
   const [a, b, d, e, x, y] = op.transform;
   c.save();
   c.imageSmoothingEnabled = cell === 1 && project.canvasMode !== 'pixel';

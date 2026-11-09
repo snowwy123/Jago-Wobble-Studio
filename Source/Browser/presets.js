@@ -9,13 +9,13 @@ let librarySelection = new Set(),
   lastPresetRemoval = null;
 const currentPresetOptions = {};
 const starterPresetLibrary = {
-  brushes: builtinTips.map((tip) => ({
+  brushes: [...builtinTips.map((tip) => ({
     name: tipNames[tip],
     brush: { ...stampDefaults, tip },
     size: 40,
     opacity: 1,
     colour: '#252338'
-  })),
+  })), ...oddLittleMarks],
   motions: Object.keys(motionDescriptions).map((type) => ({
     name: {
       classic: 'Classic line boil',
@@ -137,7 +137,7 @@ function refreshSavedPresetChoices() {
     const groups = [
       [
         kind === 'brushes' ? 'Default brushes' : 'Default settings',
-        starterPresetLibrary[kind].map((preset, index) => ({ preset, value: 'starter:' + index }))
+        starterPresetLibrary[kind].slice(0, kind === 'brushes' ? builtinTips.length : undefined).map((preset, index) => ({ preset, value: 'starter:' + index }))
       ],
       [
         'Imported presets',
@@ -159,6 +159,7 @@ function refreshSavedPresetChoices() {
       ]
     ];
     if (kind === 'brushes') {
+      groups.splice(1, 0, ['Odd Little Marks', oddLittleMarks.map((preset, index) => ({preset, value: 'starter:' + (builtinTips.length + index)}))]);
       const aliases = stampSourceAliases.get(project);
       const images = Object.entries(project.brushTips || {}).filter(
         ([id, tip]) =>

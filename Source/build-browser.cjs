@@ -56,6 +56,7 @@ function buildBrowser() {
   }
 
   // Validate everything before touching either output. Both editions use identical bytes.
+const previewInjectionAt=html.lastIndexOf('</body>');html=html.slice(0,previewInjectionAt)+'<script>'+fs.readFileSync(path.join(__dirname,'project-preview.js'),'utf8').replace(/<\/script/gi,'<\\/script')+'</script>'+html.slice(previewInjectionAt);
   for (const name of ['Jago-Wobble-Studio.html', 'index.html']) {
     fs.writeFileSync(path.join(suiteDir, name), html);
   }

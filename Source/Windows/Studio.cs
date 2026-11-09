@@ -215,7 +215,7 @@ internal sealed partial class StudioWindow : Form
                         AddExtension = true,
                         DefaultExt = ext.TrimStart('.'),
                         OverwritePrompt = true,
-                        Filter = ext == ".jago" ? "Jago Wobble project (*.jago)|*.jago" : ext == ".jagopresets" ? "Jago presets (*.jagopresets)|*.jagopresets" : ext == ".gif" ? "Animated GIF (*.gif)|*.gif" : ext == ".zip" ? "PNG frame sequence (*.zip)|*.zip" : "PNG image (*.png)|*.png"
+                        Filter = ext == ".jagomotif" ? "Jago motif (*.jagomotif)|*.jagomotif" : ext == ".jago" ? "Jago Wobble project (*.jago)|*.jago" : ext == ".jagopresets" ? "Jago presets (*.jagopresets)|*.jagopresets" : ext == ".gif" ? "Animated GIF (*.gif)|*.gif" : ext == ".zip" ? "PNG frame sequence (*.zip)|*.zip" : "PNG image (*.png)|*.png"
                     }
 
                     )
